@@ -4,4 +4,4 @@
 
 Projeto feito no curso da Alura - JavaScript na Web: armazenando dados no navegador.
 
-Obs: HTML e CSS fornecidos prontos, somente o javascript foi desenvolvido so zero.
+Obs: HTML e CSS fornecidos prontos, somente o javascript foi desenvolvido do zero.
