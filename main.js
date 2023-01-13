@@ -24,9 +24,9 @@ form.addEventListener('submit', (event) => {
         
         atualizaElemento(itemAtual);
 
-        itens[existe.id] = itemAtual; //substituí o item antigo na array pelo novo para que possa ser reescrito para o localStorage.
+        itens[itens.findIndex(element => element.id === existe.id)] = itemAtual; //substituí o item antigo na array pelo novo para que possa ser reescrito para o localStorage.
     } else{
-        itemAtual.id = itens.length;
+        itemAtual.id = itens[itens.length - 1] ? (itens[itens.length - 1]).id + 1 : 0;
 
         itens.push(itemAtual); //adiciona o objeto à array com os itens do localStorage.
 
@@ -51,9 +51,32 @@ function criaElemento(item) {
     novoItem.appendChild(numeroItem); //utiliza-se o appendChild para incluir a tag, pois tag é considerada um objeto.
     novoItem.innerHTML += item.nome;
 
+    novoItem.appendChild(botaoDeleta(item.id));
+
     lista.appendChild(novoItem);
 }
 
 function atualizaElemento(item) {
     document.querySelector('[data-id = "'+ item.id +'"]').innerText = item.quantidade; //seleciona o data attribute e incluí a nova quantidade no DOM.
+}
+
+function botaoDeleta(id) {
+    const elementoBotao = document.createElement('button');
+    elementoBotao.innerText = 'X';
+
+    elementoBotao.addEventListener('click', function() {
+        deletaElemento(this.parentNode, id);
+    })
+
+    return elementoBotao;
+}
+
+function deletaElemento(tag, id) {
+    tag.remove();
+
+    //remover um item da array
+    itens.splice(itens.findIndex(element => element.id === id),1);
+
+    //escrever no localStorage
+    localStorage.setItem('itens', JSON.stringify(itens));
 }
